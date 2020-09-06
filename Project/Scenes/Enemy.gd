@@ -17,11 +17,15 @@ var direction: Vector2
 
 var dodge_direction: Vector2
 var dodge_amount = 5
+var dodge_speed = 10
 var dodging = 0
 
 var target: KinematicBody2D = null
 var target_point: Vector2
 var last_prediction: Vector2
+var aim_speed = 25
+var guess_min_speed = 75
+var guess_max_speed = 125
 
 func _physics_process(delta):
 	if target != null:		
@@ -51,14 +55,14 @@ func predict_target_location():
 	if (target.name != "Player"):
 		last_prediction = target.global_position
 		return
-	var guess_speed = rand_range(80, 120)
+	var guess_speed = rand_range(guess_min_speed, guess_max_speed)
 	var guess_position = target.movement.normalized() * guess_speed
 	last_prediction = target.global_position + guess_position
 	
 func update_target_location():
 	if target_point == Vector2():
 		target_point = last_prediction
-	target_point = target_point.move_toward(last_prediction, 50)
+	target_point = target_point.move_toward(last_prediction, aim_speed)
 
 func look_at_target():
 	Weapons.look_at(target_point)
@@ -80,7 +84,7 @@ func stop_moving(delta):
 
 func try_dodge(delta):
 	dodging -= 1
-	movement = Body.move(movement, dodge_direction, delta * 10)
+	movement = Body.move(movement, dodge_direction, delta * dodge_speed)
 	movement = move_and_slide(movement)	
 
 func shoot(delta):
