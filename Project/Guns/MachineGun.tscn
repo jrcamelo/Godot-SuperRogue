@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Guns/MachineGun.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0.286743, 0.90625, 0.296423, 1, 0.666992, 1, 0.65625, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+width = 20
+
+[node name="MachineGun" type="Sprite"]
+position = Vector2( -0.0587492, 0.384272 )
+rotation = -4.71107
+scale = Vector2( 0.159024, 24.1363 )
+texture = SubResource( 2 )
+offset = Vector2( 0, 0.9 )
+script = ExtResource( 1 )
+camera_force = 1.5
+
+[node name="ShootingPoint" type="Position2D" parent="."]
+position = Vector2( 0.25475, 1.49923 )
+
+[node name="Cooldown" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+[connection signal="timeout" from="Cooldown" to="." method="_on_cooldown"]

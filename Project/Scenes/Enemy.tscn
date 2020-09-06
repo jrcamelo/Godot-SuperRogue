@@ -1,0 +1,95 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Bodies/NormalBody.gd" type="Script" id=1]
+[ext_resource path="res://Guns/Cannon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/BulletDetectionRange.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/DetectionRange.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Enemy.gd" type="Script" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="Gradient" id=2]
+colors = PoolColorArray( 0.00143433, 0.183594, 0, 1, 0.0118406, 0.378906, 0, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+width = 20
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 448.0
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 120.0
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0.575949, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+width = 2053
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+lifetime_randomness = 1.0
+flag_disable_z = true
+spread = 180.0
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 200.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 8.0
+scale_random = 1.0
+scale_curve = SubResource( 6 )
+color = Color( 0.356863, 0.631373, 0, 1 )
+
+[node name="Enemy" type="KinematicBody2D"]
+collision_layer = 5
+collision_mask = 63
+script = ExtResource( 5 )
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Body" type="Sprite" parent="."]
+position = Vector2( -0.140464, -0.0936432 )
+scale = Vector2( 1, 20 )
+texture = SubResource( 3 )
+script = ExtResource( 1 )
+MAX_SPEED = 300
+ACCEL = 300
+FRICTION = 100
+
+[node name="DetectionRange" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 4 )
+
+[node name="DetectionCollider" type="CollisionShape2D" parent="DetectionRange"]
+shape = SubResource( 4 )
+
+[node name="BulletDetectionRange" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 33
+script = ExtResource( 3 )
+
+[node name="DetectionCollider" type="CollisionShape2D" parent="BulletDetectionRange"]
+shape = SubResource( 8 )
+
+[node name="Weapons" type="Node2D" parent="."]
+
+[node name="Weapon" type="Node2D" parent="Weapons"]
+
+[node name="Cannon" parent="Weapons/Weapon" instance=ExtResource( 2 )]
+position = Vector2( 0.0299297, -0.184772 )
+rotation = 0.0
+
+[node name="Particles2D" type="Particles2D" parent="."]
+emitting = false
+amount = 6
+lifetime = 0.25
+one_shot = true
+preprocess = 0.01
+explosiveness = 1.0
+process_material = SubResource( 7 )
+[connection signal="body_entered" from="DetectionRange" to="DetectionRange" method="_on_body_entered"]
+[connection signal="body_entered" from="BulletDetectionRange" to="BulletDetectionRange" method="_on_body_entered"]

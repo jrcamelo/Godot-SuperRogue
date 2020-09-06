@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Bodies/NormalBody.gd" type="Script" id=1]
+[ext_resource path="res://Guns/Cannon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Bodies/NormalBody.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Player.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 2147483650
+collision_mask = 61
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Body" parent="." instance=ExtResource( 3 )]
+script = ExtResource( 1 )
+MAX_SPEED = 300
+ACCEL = 3000
+
+[node name="Weapons" type="Node2D" parent="."]
+
+[node name="WeaponRight" type="Node2D" parent="Weapons"]
+position = Vector2( -6, 0 )
+
+[node name="Cannon" parent="Weapons/WeaponRight" instance=ExtResource( 2 )]
+position = Vector2( -0.0245132, 0.108504 )
+rotation = 0.0
+
+[node name="WeaponLeft" type="Node2D" parent="Weapons"]
+position = Vector2( 6.24334, -0.0743256 )
+
+[node name="Cannon" parent="Weapons/WeaponLeft" instance=ExtResource( 2 )]
+position = Vector2( -0.247009, -0.0361209 )
+rotation = 0.0
