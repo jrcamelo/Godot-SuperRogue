@@ -15,7 +15,7 @@ extents = Vector2( 10, 0.531566 )
 [node name="Cannon" type="Sprite"]
 position = Vector2( -0.243845, -0.0392742 )
 rotation = -4.71107
-scale = Vector2( 3.538, 8.526 )
+scale = Vector2( 4.226, 8.526 )
 texture = SubResource( 2 )
 offset = Vector2( 0, 5 )
 script = ExtResource( 1 )

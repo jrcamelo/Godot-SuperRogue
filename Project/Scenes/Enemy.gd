@@ -23,9 +23,10 @@ var dodging = 0
 var target: KinematicBody2D = null
 var target_point: Vector2
 var last_prediction: Vector2
-var aim_speed = 25
+var aim_speed = 20
 var guess_min_speed = 75
 var guess_max_speed = 125
+var guess_speed = 0
 
 func _physics_process(delta):
 	if target != null:		
@@ -44,18 +45,21 @@ func deal_with_target(delta):
 	look_at_target()
 	if dodging == 0:
 		follow_player_at_distance(delta)
-	shoot(delta)
+	if shoot(delta):
+		update_guess_speed()
 
 func calculate_distance():
 	var to_player: Vector2 = target.global_position - global_position
 	current_distance = to_player.length()
 	direction = to_player.normalized()
 	
+func update_guess_speed():
+	guess_speed = rand_range(guess_min_speed, guess_max_speed)
+	
 func predict_target_location():
 	if (target.name != "Player"):
 		last_prediction = target.global_position
 		return
-	var guess_speed = rand_range(guess_min_speed, guess_max_speed)
 	var guess_position = target.movement.normalized() * guess_speed
 	last_prediction = target.global_position + guess_position
 	
@@ -66,7 +70,7 @@ func update_target_location():
 
 func look_at_target():
 	Weapons.look_at(target_point)
-	Weapons.rotate(-190)
+	Weapons.rotate(-1.5708)
 	
 func follow_player_at_distance(delta):
 	if current_distance - kite_distance < keep_distance:
@@ -89,7 +93,8 @@ func try_dodge(delta):
 
 func shoot(delta):
 	if current_distance < shooting_distance:
-		Weapon.shoot(target_point)
+		return Weapon.shoot(target_point) > 0
+	return false
 
 func forget_target_if_too_far():
 	if (current_distance > maximum_distance):
@@ -113,7 +118,3 @@ func bullet_detected(bullet):
 	var incoming = bullet.global_position - global_position
 	var incoming_angle = bullet.global_position.angle_to_point(global_position)
 	dodge_direction = incoming.normalized().rotated(deg2rad(rand_range(-60, -120)))
-	
-	
-
-	

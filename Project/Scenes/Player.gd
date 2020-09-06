@@ -16,8 +16,8 @@ onready var MachineGun = preload("res://Guns/MachineGun.tscn")
 onready var Cannon = preload("res://Guns/Cannon.tscn")
 onready var Shield = preload("res://Guns/Shield.tscn")
 
-onready var list_weapons_left = [[Cannon, 0], [MachineGun, 0], [Shield, -190]]
-onready var list_weapons_right = [[Cannon, 0], [MachineGun, 0], [Shield, 190]]
+onready var list_weapons_left = [[Cannon, 0], [MachineGun, 0], [Shield, deg2rad(-90)]]
+onready var list_weapons_right = [[Cannon, 0], [MachineGun, 0], [Shield, deg2rad(90)]]
 
 var current_weapon_left = 0
 var current_weapon_right = 0
@@ -56,7 +56,7 @@ func weapons(delta):
 
 func rotate_weapons():
 	Weapons.look_at(get_global_mouse_position())
-	Weapons.rotate(-190)
+	Weapons.rotate(-1.5708)
 	
 func control_left_weapon():	
 	if WeaponLeft != null:
