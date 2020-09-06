@@ -16,10 +16,12 @@ var current_distance = 0
 var direction: Vector2
 
 var dodge_direction: Vector2
-var dodge_amount = 10
+var dodge_amount = 5
 var dodging = 0
 
-var target = null
+var target: KinematicBody2D = null
+var target_point: Vector2
+var last_prediction: Vector2
 
 func _physics_process(delta):
 	if target != null:		
@@ -33,6 +35,8 @@ func _physics_process(delta):
 		
 func deal_with_target(delta):
 	calculate_distance()
+	predict_target_location()
+	update_target_location()
 	look_at_target()
 	if dodging == 0:
 		follow_player_at_distance(delta)
@@ -42,9 +46,22 @@ func calculate_distance():
 	var to_player: Vector2 = target.global_position - global_position
 	current_distance = to_player.length()
 	direction = to_player.normalized()
+	
+func predict_target_location():
+	if (target.name != "Player"):
+		last_prediction = target.global_position
+		return
+	var guess_speed = rand_range(80, 120)
+	var guess_position = target.movement.normalized() * guess_speed
+	last_prediction = target.global_position + guess_position
+	
+func update_target_location():
+	if target_point == Vector2():
+		target_point = last_prediction
+	target_point = target_point.move_toward(last_prediction, 50)
 
 func look_at_target():
-	Weapons.look_at(target.global_position)
+	Weapons.look_at(target_point)
 	Weapons.rotate(-190)
 	
 func follow_player_at_distance(delta):
@@ -63,12 +80,12 @@ func stop_moving(delta):
 
 func try_dodge(delta):
 	dodging -= 1
-	movement = Body.move(movement, dodge_direction, delta * 5)
+	movement = Body.move(movement, dodge_direction, delta * 10)
 	movement = move_and_slide(movement)	
 
 func shoot(delta):
 	if current_distance < shooting_distance:
-		Weapon.shoot(target.global_position)
+		Weapon.shoot(target_point)
 
 func forget_target_if_too_far():
 	if (current_distance > maximum_distance):
@@ -91,7 +108,7 @@ func bullet_detected(bullet):
 	dodging = dodge_amount
 	var incoming = bullet.global_position - global_position
 	var incoming_angle = bullet.global_position.angle_to_point(global_position)
-	dodge_direction = incoming.normalized().rotated(deg2rad(-90))
+	dodge_direction = incoming.normalized().rotated(deg2rad(rand_range(-60, -120)))
 	
 	
 

@@ -18,17 +18,17 @@ width = 20
 [sub_resource type="CircleShape2D" id=4]
 radius = 448.0
 
-[sub_resource type="CircleShape2D" id=8]
+[sub_resource type="CircleShape2D" id=5]
 radius = 120.0
 
-[sub_resource type="Curve" id=5]
+[sub_resource type="Curve" id=6]
 _data = [ Vector2( 0.575949, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=6]
+[sub_resource type="CurveTexture" id=7]
 width = 2053
-curve = SubResource( 5 )
+curve = SubResource( 6 )
 
-[sub_resource type="ParticlesMaterial" id=7]
+[sub_resource type="ParticlesMaterial" id=8]
 lifetime_randomness = 1.0
 flag_disable_z = true
 spread = 180.0
@@ -39,7 +39,7 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 8.0
 scale_random = 1.0
-scale_curve = SubResource( 6 )
+scale_curve = SubResource( 7 )
 color = Color( 0.356863, 0.631373, 0, 1 )
 
 [node name="Enemy" type="KinematicBody2D"]
@@ -55,8 +55,8 @@ position = Vector2( -0.140464, -0.0936432 )
 scale = Vector2( 1, 20 )
 texture = SubResource( 3 )
 script = ExtResource( 1 )
-MAX_SPEED = 300
-ACCEL = 300
+MAX_SPEED = 400
+ACCEL = 400
 FRICTION = 100
 
 [node name="DetectionRange" type="Area2D" parent="."]
@@ -73,7 +73,7 @@ collision_mask = 33
 script = ExtResource( 3 )
 
 [node name="DetectionCollider" type="CollisionShape2D" parent="BulletDetectionRange"]
-shape = SubResource( 8 )
+shape = SubResource( 5 )
 
 [node name="Weapons" type="Node2D" parent="."]
 
@@ -90,6 +90,6 @@ lifetime = 0.25
 one_shot = true
 preprocess = 0.01
 explosiveness = 1.0
-process_material = SubResource( 7 )
+process_material = SubResource( 8 )
 [connection signal="body_entered" from="DetectionRange" to="DetectionRange" method="_on_body_entered"]
 [connection signal="body_entered" from="BulletDetectionRange" to="BulletDetectionRange" method="_on_body_entered"]

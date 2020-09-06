@@ -19,6 +19,7 @@ shape = SubResource( 1 )
 script = ExtResource( 1 )
 MAX_SPEED = 300
 ACCEL = 3000
+FRICTION = 10000
 
 [node name="Weapons" type="Node2D" parent="."]
 
