@@ -122,10 +122,9 @@ func was_hit(damage):
 		return
 	$Particles2D.restart()
 	increase_detection_range()
-	health -= damage*10
+	health -= damage
 	if health <= 0:
-		alive = false
-	
+		alive = false	
 	#.was_hit(damage)
 	
 func increase_detection_range():

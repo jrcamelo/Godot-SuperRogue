@@ -59,6 +59,7 @@ script = ExtResource( 4 )
 position = Vector2( 1.10684, 245.253 )
 
 [node name="Camera2D" type="Camera2D" parent="Emitter"]
+visible = false
 scale = Vector2( 1e-05, 1.25 )
 current = true
 zoom = Vector2( 1.25, 1.25 )
