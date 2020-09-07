@@ -11,5 +11,5 @@ func create_bullet_instance():
 	bullet.DAMAGE = 0.25
 	return bullet
 
-func _on_cooldown():
+func _on_Cooldown():
 	can_shoot = true

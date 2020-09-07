@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/Enemy.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10.4262, 10.3583 )
 
 [sub_resource type="Gradient" id=2]
 colors = PoolColorArray( 0.00143433, 0.183594, 0, 1, 0.0118406, 0.378906, 0, 1 )
@@ -19,7 +20,7 @@ width = 20
 radius = 448.0
 
 [sub_resource type="CircleShape2D" id=5]
-radius = 120.0
+radius = 104.0
 
 [sub_resource type="Curve" id=6]
 _data = [ Vector2( 0.575949, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
@@ -40,7 +41,6 @@ orbit_velocity_random = 0.0
 scale = 8.0
 scale_random = 1.0
 scale_curve = SubResource( 7 )
-color = Color( 0.356863, 0.631373, 0, 1 )
 
 [node name="Enemy" type="KinematicBody2D"]
 collision_layer = 5
@@ -56,10 +56,11 @@ scale = Vector2( 1, 20 )
 texture = SubResource( 3 )
 script = ExtResource( 1 )
 MAX_SPEED = 400
-ACCEL = 400
-FRICTION = 100
+ACCEL = 600
+FRICTION = 200
 
 [node name="DetectionRange" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 2
 script = ExtResource( 4 )
@@ -68,11 +69,12 @@ script = ExtResource( 4 )
 shape = SubResource( 4 )
 
 [node name="BulletDetectionRange" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 33
 script = ExtResource( 3 )
 
-[node name="DetectionCollider" type="CollisionShape2D" parent="BulletDetectionRange"]
+[node name="DetectionRange" type="CollisionShape2D" parent="BulletDetectionRange"]
 shape = SubResource( 5 )
 
 [node name="Weapons" type="Node2D" parent="."]
@@ -80,16 +82,15 @@ shape = SubResource( 5 )
 [node name="Weapon" type="Node2D" parent="Weapons"]
 
 [node name="Cannon" parent="Weapons/Weapon" instance=ExtResource( 2 )]
-position = Vector2( 0.0299297, -0.184772 )
-rotation = 0.0
 
 [node name="Particles2D" type="Particles2D" parent="."]
 emitting = false
 amount = 6
-lifetime = 0.25
+lifetime = 0.4
 one_shot = true
 preprocess = 0.01
 explosiveness = 1.0
 process_material = SubResource( 8 )
 [connection signal="body_entered" from="DetectionRange" to="DetectionRange" method="_on_body_entered"]
+[connection signal="body_exited" from="DetectionRange" to="DetectionRange" method="_on_body_exited"]
 [connection signal="body_entered" from="BulletDetectionRange" to="BulletDetectionRange" method="_on_body_entered"]

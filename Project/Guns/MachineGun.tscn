@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Guns/MachineGun.gd" type="Script" id=1]
 
@@ -9,19 +9,56 @@ colors = PoolColorArray( 0.286743, 0.90625, 0.296423, 1, 0.666992, 1, 0.65625, 1
 gradient = SubResource( 1 )
 width = 20
 
-[node name="MachineGun" type="Sprite"]
-position = Vector2( -0.0587492, 0.384272 )
-rotation = -4.71107
-scale = Vector2( 0.159024, 24.1363 )
-texture = SubResource( 2 )
-offset = Vector2( 0, 0.9 )
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0.487342, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+lifetime_randomness = 1.0
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1.5, 1 )
+flag_disable_z = true
+spread = 30.0
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+initial_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 3.0
+scale_random = 1.0
+scale_curve = SubResource( 4 )
+color = Color( 0.854902, 1, 0.862745, 1 )
+
+[node name="MachineGun" type="Node2D"]
 script = ExtResource( 1 )
 camera_force = 1.5
 
+[node name="MachineGun" type="Sprite" parent="."]
+position = Vector2( -4.65661e-10, 0.0078125 )
+rotation = -7.85013
+scale = Vector2( 0.159024, 24.1363 )
+texture = SubResource( 2 )
+centered = false
+offset = Vector2( -9.94085, 0.374996 )
+
 [node name="ShootingPoint" type="Position2D" parent="."]
-position = Vector2( 0.25475, 1.49923 )
+position = Vector2( 33.4721, -0.0413923 )
 
 [node name="Cooldown" type="Timer" parent="."]
 wait_time = 0.25
 autostart = true
-[connection signal="timeout" from="Cooldown" to="." method="_on_cooldown"]
+
+[node name="ShootParticles" type="Particles2D" parent="."]
+position = Vector2( 34.1121, -0.0606518 )
+emitting = false
+amount = 4
+lifetime = 0.3
+one_shot = true
+preprocess = 0.1
+explosiveness = 1.0
+local_coords = false
+process_material = SubResource( 5 )
+[connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown"]

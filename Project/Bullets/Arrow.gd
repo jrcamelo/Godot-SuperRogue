@@ -8,7 +8,10 @@ func _ready():
 	apply_impulse(Vector2(), Vector2(SPEED, 0).rotated(rotation))
 
 func _on_body_entered(body):
-	if (body != shooter):
-		if (body is Character):
+	if body != shooter:
+		if body is Character:
 				body.was_hit(DAMAGE)
-		queue_free()
+				if body.alive == true:
+					queue_free()
+		else:
+			queue_free()

@@ -16,8 +16,8 @@ onready var MachineGun = preload("res://Guns/MachineGun.tscn")
 onready var Cannon = preload("res://Guns/Cannon.tscn")
 onready var Shield = preload("res://Guns/Shield.tscn")
 
-onready var list_weapons_left = [[Cannon, 0], [MachineGun, 0], [Shield, deg2rad(-90)]]
-onready var list_weapons_right = [[Cannon, 0], [MachineGun, 0], [Shield, deg2rad(90)]]
+onready var list_weapons_left = [Cannon, MachineGun, Shield]
+onready var list_weapons_right = [Cannon, MachineGun, Shield]
 
 var current_weapon_left = 0
 var current_weapon_right = 0
@@ -30,6 +30,9 @@ func _physics_process(delta):
 		Engine.time_scale = 0.2
 	else:
 		Engine.time_scale = 1
+		
+	if Input.is_action_just_pressed("r"):
+		restart()
 	
 
 func move(delta):	
@@ -48,15 +51,14 @@ func weapons(delta):
 	if Input.is_action_just_pressed("z"):
 		current_weapon_left = (current_weapon_left + 1) % list_weapons_left.size()
 		var new_weapon = list_weapons_left[current_weapon_left]
-		switch_weapon_left(new_weapon[0].instance(), new_weapon[1])
+		switch_weapon_left(new_weapon.instance())
 	if Input.is_action_just_pressed("x"):
 		current_weapon_right = (current_weapon_right + 1) % list_weapons_right.size()
 		var new_weapon = list_weapons_right[current_weapon_right]
-		switch_weapon_right(new_weapon[0].instance(), new_weapon[1])
+		switch_weapon_right(new_weapon.instance())
 
 func rotate_weapons():
 	Weapons.look_at(get_global_mouse_position())
-	Weapons.rotate(-1.5708)
 	
 func control_left_weapon():	
 	if WeaponLeft != null:
@@ -73,20 +75,23 @@ func shoot(weapon):
 	if force > 0:
 		emit_signal("camera_shaken", force)
 	
-func switch_weapon_left(new_weapon, rotate = 0):
+func switch_weapon_left(new_weapon):
 	WeaponSlotLeft.add_child(new_weapon)
-	new_weapon.rotation = rotate
 	if WeaponLeft != null:
 		WeaponLeft.queue_free()
 	WeaponLeft = new_weapon
 	
-func switch_weapon_right(new_weapon, rotate = 0):
+func switch_weapon_right(new_weapon):
 	WeaponSlotRight.add_child(new_weapon)
-	new_weapon.rotation = rotate
+	if new_weapon.name == "Shield":
+		new_weapon.rotation = deg2rad(180)
 	if WeaponRight != null:
 		WeaponRight.queue_free()
 	WeaponRight = new_weapon
 	
 func was_hit(damage):
+	restart()
+	
+func restart():
 	get_tree().reload_current_scene()
 	

@@ -13,3 +13,4 @@ func create_bullet_instance():
 
 func _on_Cooldown():
 	can_shoot = true
+

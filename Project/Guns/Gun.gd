@@ -1,9 +1,10 @@
 class_name Gun
-extends Sprite
+extends Node2D
 
 export onready var parent = get_parent().get_parent().get_parent()
 export onready var ShootingPoint = get_node("ShootingPoint")
 export onready var Cooldown: Timer = get_node("Cooldown")
+export onready var ShootParticles: Particles2D = get_node("ShootParticles")
 export var Bullet = preload("res://Bullets/Arrow.tscn")
 export var camera_force = 0.1
 var can_shoot = false
@@ -18,6 +19,8 @@ func shoot(target):
 	if can_shoot:
 		can_shoot = false
 		Cooldown.start()
+		if ShootParticles != null:
+			ShootParticles.restart()
 		shoot_bullet(target)
 		return camera_force
 	return 0

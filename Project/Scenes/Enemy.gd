@@ -8,29 +8,34 @@ onready var DetectionRange = get_node("DetectionRange/DetectionCollider")
 
 var movement = Vector2.ZERO
 export var keep_distance = 100
-export var maximum_distance = 600
 export var shooting_distance = 500
+export var detection_increase_when_hit = 0.25
 export var kite_distance = 200
 export var kite_direction = Vector2(2, 0)
 var current_distance = 0
 var direction: Vector2
 
 var dodge_direction: Vector2
-var dodge_amount = 5
-var dodge_speed = 10
+var dodge_time = 0.2
+var dodge_speed = 2
 var dodging = 0
 
 var target: KinematicBody2D = null
 var target_point: Vector2
 var last_prediction: Vector2
 var aim_speed = 20
-var guess_min_speed = 75
-var guess_max_speed = 125
+var guess_min_speed = 80
+var guess_max_speed = 100
 var guess_speed = 0
+var chance_to_not_guess = 0.1
 
 func _physics_process(delta):
+	if not alive:
+		stop_moving(delta)
+		return
+		
 	if target != null:		
-		calculate_distance()
+		update_distance_to_player()
 		if target != null:
 			deal_with_target(delta)
 	if dodging > 0:
@@ -39,22 +44,26 @@ func _physics_process(delta):
 		stop_moving(delta)
 		
 func deal_with_target(delta):
-	calculate_distance()
 	predict_target_location()
 	update_target_location()
 	look_at_target()
-	if dodging == 0:
+	if dodging <= 0:
 		follow_player_at_distance(delta)
 	if shoot(delta):
 		update_guess_speed()
 
-func calculate_distance():
-	var to_player: Vector2 = target.global_position - global_position
+func update_distance_to_player():
+	var to_player = compare_positions_to_vector(target)
 	current_distance = to_player.length()
 	direction = to_player.normalized()
 	
+func compare_positions_to_vector(vector) -> Vector2:
+	return vector.global_position - global_position
+	
 func update_guess_speed():
 	guess_speed = rand_range(guess_min_speed, guess_max_speed)
+	if randf() > 1 - chance_to_not_guess:
+		guess_speed = 0
 	
 func predict_target_location():
 	if (target.name != "Player"):
@@ -70,7 +79,6 @@ func update_target_location():
 
 func look_at_target():
 	Weapons.look_at(target_point)
-	Weapons.rotate(-1.5708)
 	
 func follow_player_at_distance(delta):
 	if current_distance - kite_distance < keep_distance:
@@ -83,11 +91,13 @@ func follow_player_at_distance(delta):
 		stop_moving(delta)
 	
 func stop_moving(delta):
+	if movement == Vector2.ZERO:
+		return
 	movement = Body.move(movement, Vector2.ZERO, delta)
 	movement = move_and_slide(movement)
 
 func try_dodge(delta):
-	dodging -= 1
+	dodging -= delta
 	movement = Body.move(movement, dodge_direction, delta * dodge_speed)
 	movement = move_and_slide(movement)	
 
@@ -96,25 +106,49 @@ func shoot(delta):
 		return Weapon.shoot(target_point) > 0
 	return false
 
-func forget_target_if_too_far():
-	if (current_distance > maximum_distance):
-		target = null
-		Weapon.Cooldown.stop()
-
 func enemy_detected(enemy):
 	target = enemy
+	increase_detection_range()
 	Weapon.can_shoot = false
 	Weapon.Cooldown.start()
 	
+func enemy_left_range():
+	target = null
+	Weapon.can_shoot = false
+	Weapon.Cooldown.stop()
+	
 func was_hit(damage):
+	if not alive:
+		return
 	$Particles2D.restart()
-	DetectionRange.transform.x *= 1.5
-	DetectionRange.transform.y *= 1.5
-	maximum_distance *= 1.5
-	.was_hit(damage)
+	increase_detection_range()
+	health -= damage*10
+	if health <= 0:
+		alive = false
+	
+	#.was_hit(damage)
+	
+func increase_detection_range():
+	DetectionRange.transform.x *= 1 + detection_increase_when_hit
+	DetectionRange.transform.y *= 1 + detection_increase_when_hit
 
-func bullet_detected(bullet):
-	dodging = dodge_amount
-	var incoming = bullet.global_position - global_position
-	var incoming_angle = bullet.global_position.angle_to_point(global_position)
-	dodge_direction = incoming.normalized().rotated(deg2rad(rand_range(-60, -120)))
+func estimate_position(vector, angle, length):
+	return Vector2(length * cos(angle) + vector.x, length * sin(angle) + vector.y)
+
+func bullet_detected(bullet: RigidBody2D):
+	if alive and dodging <= 0:
+		set_dodge_direction(bullet)
+
+func set_dodge_direction(bullet: RigidBody2D):
+	dodging = dodge_time
+		
+	var right_or_left = deg2rad(90 * random_positive_or_negative())
+	var incoming_bullet = compare_positions_to_vector(bullet)
+	var guess_safe_angle = incoming_bullet.angle() + right_or_left
+	var safe_guess = estimate_position(global_position, guess_safe_angle, 100)
+	dodge_direction = -(global_position - safe_guess).normalized()
+	
+func random_positive_or_negative():
+	if (randf() > 0.5):
+		return 1
+	return -1

@@ -24,15 +24,11 @@ FRICTION = 10000
 [node name="Weapons" type="Node2D" parent="."]
 
 [node name="WeaponRight" type="Node2D" parent="Weapons"]
-position = Vector2( -6, 0 )
+position = Vector2( 0, 6 )
 
 [node name="Cannon" parent="Weapons/WeaponRight" instance=ExtResource( 2 )]
-position = Vector2( -0.0245132, 0.108504 )
-rotation = 0.0
 
 [node name="WeaponLeft" type="Node2D" parent="Weapons"]
-position = Vector2( 6.24334, -0.0743256 )
+position = Vector2( 0, -6 )
 
 [node name="Cannon" parent="Weapons/WeaponLeft" instance=ExtResource( 2 )]
-position = Vector2( -0.247009, -0.0361209 )
-rotation = 0.0
