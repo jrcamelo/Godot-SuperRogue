@@ -107,12 +107,16 @@ func shoot(delta):
 	return false
 
 func enemy_detected(enemy):
+	if not alive:
+		return
 	target = enemy
 	increase_detection_range()
 	Weapon.can_shoot = false
 	Weapon.Cooldown.start()
 	
 func enemy_left_range():
+	if not alive:
+		return
 	target = null
 	Weapon.can_shoot = false
 	Weapon.Cooldown.stop()
@@ -124,7 +128,8 @@ func was_hit(damage):
 	increase_detection_range()
 	health -= damage
 	if health <= 0:
-		alive = false	
+		alive = false
+		Weapon.queue_free()
 	#.was_hit(damage)
 	
 func increase_detection_range():
