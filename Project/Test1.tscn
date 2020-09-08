@@ -59,14 +59,16 @@ script = ExtResource( 4 )
 position = Vector2( 1.10684, 245.253 )
 
 [node name="Camera2D" type="Camera2D" parent="Emitter"]
-visible = false
 scale = Vector2( 1e-05, 1.25 )
 current = true
-zoom = Vector2( 1.25, 1.25 )
+zoom = Vector2( 1.5, 1.5 )
 process_mode = 0
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="Emitter/Camera2D"]
+[node name="Node2D" type="Node2D" parent="Emitter/Camera2D"]
+scale = Vector2( 1, 1.224 )
+
+[node name="Sprite" type="Sprite" parent="Emitter/Camera2D/Node2D"]
 position = Vector2( 377696, -1.29193 )
 scale = Vector2( 93071.7, 718.416 )
 z_index = -100

@@ -15,8 +15,8 @@ var current_distance = 0
 var direction: Vector2
 
 var dodge_direction: Vector2
-var dodge_time = 0.2
-var dodge_speed = 2
+var dodge_time = 0.1
+var dodge_speed = 20
 var dodging = 0
 
 var target: KinematicBody2D = null
@@ -146,14 +146,33 @@ func bullet_detected(bullet: RigidBody2D):
 	if alive and dodging <= 0:
 		set_dodge_direction(bullet)
 
+func geometry(a: Vector2, b: Vector2, direction):
+	var c = Vector2.ZERO
+	c.x = a.x + (b.x - a.x) * cos(deg2rad(52 * direction)) - (b.y - a.y) * sin(deg2rad(52 * direction))
+	c.y = a.y + (b.x - a.x) * sin(deg2rad(52 * direction)) + (b.y - a.y) * cos(deg2rad(52 * direction))
+	return c
+	
+func add_test(pos):
+	var test = preload("res://TestSquare.tscn").instance() as Node2D
+	test.global_position = pos
+	get_parent().add_child(test)
+	
+
 func set_dodge_direction(bullet: RigidBody2D):
 	dodging = dodge_time
+	
+	var bullet_future = bullet.global_position + (bullet.linear_velocity.normalized() * 200)
+	var bullet_future_angle = global_position.angle_to_point(bullet_future)
+	
+	var safe_right = geometry(bullet.global_position, bullet_future, 1)
+	var safe_left = geometry(bullet.global_position, bullet_future, -1)
+	
+	var guess_safe = safe_right
+	if (global_position - safe_right).length() < (global_position - safe_left).length():
+		guess_safe = safe_left
 		
-	var right_or_left = deg2rad(90 * random_positive_or_negative())
-	var incoming_bullet = compare_positions_to_vector(bullet)
-	var guess_safe_angle = incoming_bullet.angle() + right_or_left
-	var safe_guess = estimate_position(global_position, guess_safe_angle, 100)
-	dodge_direction = -(global_position - safe_guess).normalized()
+	dodge_direction = (global_position - guess_safe).normalized() * 300
+	#add_test(global_position + dodge_direction)
 	
 func random_positive_or_negative():
 	if (randf() > 0.5):

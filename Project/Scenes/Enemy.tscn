@@ -55,8 +55,8 @@ position = Vector2( -0.140464, -0.0936432 )
 scale = Vector2( 1, 20 )
 texture = SubResource( 3 )
 script = ExtResource( 1 )
-MAX_SPEED = 400
-ACCEL = 600
+MAX_SPEED = 300
+ACCEL = 100
 FRICTION = 200
 
 [node name="DetectionRange" type="Area2D" parent="."]
