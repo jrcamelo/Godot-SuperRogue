@@ -5,7 +5,8 @@ export onready var parent = get_parent().get_parent().get_parent()
 export onready var ShootingPoint = get_node("ShootingPoint")
 export onready var Cooldown: Timer = get_node("Cooldown")
 export onready var ShootParticles: Particles2D = get_node("ShootParticles")
-export var Bullet = preload("res://Bullets/Arrow.tscn")
+export onready var Bullet = preload("res://Bullets/Arrow.tscn")
+onready var bullet_instance = create_bullet_instance()
 export var camera_force = 0.1
 var can_shoot = false
 

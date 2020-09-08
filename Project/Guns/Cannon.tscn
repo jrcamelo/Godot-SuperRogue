@@ -43,10 +43,10 @@ rotation = -1.5708
 scale = Vector2( 0.245971, 16.2632 )
 texture = SubResource( 2 )
 centered = false
-offset = Vector2( -10.0177, 0.474555 )
+offset = Vector2( -10.018, 0 )
 
 [node name="ShootingPoint" type="Position2D" parent="."]
-position = Vector2( 24.284, -0.0140839 )
+position = Vector2( 17.1092, 0.0177097 )
 
 [node name="Cooldown" type="Timer" parent="."]
 process_mode = 0
@@ -54,7 +54,7 @@ wait_time = 0.8
 autostart = true
 
 [node name="ShootParticles" type="Particles2D" parent="."]
-position = Vector2( 24.3102, -0.0102148 )
+position = Vector2( 17.1354, 0.0215788 )
 emitting = false
 amount = 6
 lifetime = 0.4

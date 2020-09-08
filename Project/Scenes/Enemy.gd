@@ -6,7 +6,6 @@ onready var Weapon = WeaponSlot.get_child(0) as Gun
 onready var Body = get_node("Body")
 onready var DetectionRange = get_node("DetectionRange/DetectionCollider")
 
-var movement = Vector2.ZERO
 export var keep_distance = 100
 export var shooting_distance = 500
 export var detection_increase_when_hit = 0.25
@@ -66,11 +65,13 @@ func update_guess_speed():
 		guess_speed = 0
 	
 func predict_target_location():
-	if (target.name != "Player"):
+	if !(target is Character):
+		print("not")
 		last_prediction = target.global_position
 		return
+		
 	var guess_position = target.movement.normalized() * guess_speed
-	last_prediction = target.global_position + guess_position
+	last_prediction = target.global_position + guess_position	
 	
 func update_target_location():
 	if target_point == Vector2():
@@ -111,15 +112,17 @@ func enemy_detected(enemy):
 		return
 	target = enemy
 	increase_detection_range()
-	Weapon.can_shoot = false
-	Weapon.Cooldown.start()
+	if $FirstShot != null:
+		can_shoot(false)
+		$FirstShot.start()
+	else:
+		can_shoot(true)
 	
 func enemy_left_range():
 	if not alive:
 		return
 	target = null
-	Weapon.can_shoot = false
-	Weapon.Cooldown.stop()
+	can_shoot(false)
 	
 func was_hit(damage):
 	if not alive:
@@ -156,3 +159,16 @@ func random_positive_or_negative():
 	if (randf() > 0.5):
 		return 1
 	return -1
+
+
+func _on_FirstShot_timeout():
+	can_shoot(true)
+
+func can_shoot(can: bool = true):
+	Weapon.can_shoot = can
+	if can:
+		Weapon.Cooldown.start()
+	else:
+		Weapon.Cooldown.stop()
+		
+	

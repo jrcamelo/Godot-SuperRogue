@@ -80,6 +80,7 @@ shape = SubResource( 5 )
 [node name="Weapons" type="Node2D" parent="."]
 
 [node name="Weapon" type="Node2D" parent="Weapons"]
+position = Vector2( 6, 0 )
 
 [node name="Cannon" parent="Weapons/Weapon" instance=ExtResource( 2 )]
 
@@ -91,6 +92,10 @@ one_shot = true
 preprocess = 0.01
 explosiveness = 1.0
 process_material = SubResource( 8 )
+
+[node name="FirstShot" type="Timer" parent="."]
+one_shot = true
 [connection signal="body_entered" from="DetectionRange" to="DetectionRange" method="_on_body_entered"]
 [connection signal="body_exited" from="DetectionRange" to="DetectionRange" method="_on_body_exited"]
 [connection signal="body_entered" from="BulletDetectionRange" to="BulletDetectionRange" method="_on_body_entered"]
+[connection signal="timeout" from="FirstShot" to="." method="_on_FirstShot_timeout"]

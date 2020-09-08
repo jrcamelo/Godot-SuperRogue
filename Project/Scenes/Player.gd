@@ -2,8 +2,6 @@ extends Character
 
 signal camera_shaken(force)
 
-var movement = Vector2.ZERO
-
 onready var Body = get_node("Body")
 
 onready var Weapons = get_node("Weapons")
@@ -22,6 +20,8 @@ onready var list_weapons_right = [Cannon, MachineGun, Shield]
 var current_weapon_left = 0
 var current_weapon_right = 0
 
+var invincible = false
+
 func _physics_process(delta):
 	move(delta)
 	weapons(delta)
@@ -33,6 +33,9 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("r"):
 		restart()
+		
+	if Input.is_action_just_pressed("v"):
+		invincible = !invincible
 	
 
 func move(delta):	
@@ -90,7 +93,8 @@ func switch_weapon_right(new_weapon):
 	WeaponRight = new_weapon
 	
 func was_hit(damage):
-	restart()
+	if not invincible:
+		restart()
 	
 func restart():
 	get_tree().reload_current_scene()
