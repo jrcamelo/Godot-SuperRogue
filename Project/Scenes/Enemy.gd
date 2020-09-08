@@ -15,8 +15,8 @@ var current_distance = 0
 var direction: Vector2
 
 var dodge_direction: Vector2
-var dodge_time = 0.1
-var dodge_speed = 20
+var dodge_time = 0.02
+var dodge_speed = 50
 var dodging = 0
 
 var target: KinematicBody2D = null
@@ -99,7 +99,7 @@ func stop_moving(delta):
 
 func try_dodge(delta):
 	dodging -= delta
-	movement = Body.move(movement, dodge_direction, delta * dodge_speed)
+	movement = Body.move(movement, dodge_direction.normalized(), delta * dodge_speed)
 	movement = move_and_slide(movement)	
 
 func shoot(delta):
@@ -152,11 +152,6 @@ func geometry(a: Vector2, b: Vector2, direction):
 	c.y = a.y + (b.x - a.x) * sin(deg2rad(52 * direction)) + (b.y - a.y) * cos(deg2rad(52 * direction))
 	return c
 	
-func add_test(pos):
-	var test = preload("res://TestSquare.tscn").instance() as Node2D
-	test.global_position = pos
-	get_parent().add_child(test)
-	
 
 func set_dodge_direction(bullet: RigidBody2D):
 	dodging = dodge_time
@@ -173,6 +168,13 @@ func set_dodge_direction(bullet: RigidBody2D):
 		
 	dodge_direction = (global_position - guess_safe).normalized() * 300
 	#add_test(global_position + dodge_direction)
+	
+	
+func add_test(pos):
+	var test = preload("res://TestSquare.tscn").instance() as Node2D
+	test.global_position = pos
+	get_parent().add_child(test)
+	
 	
 func random_positive_or_negative():
 	if (randf() > 0.5):
