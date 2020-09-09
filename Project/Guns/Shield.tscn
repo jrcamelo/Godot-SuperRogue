@@ -1,29 +1,29 @@
 [gd_scene load_steps=8 format=2]
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=3]
 script/source = "extends \"res://Guns/Gun.gd\"
 
 func shoot(target):
 	return 0
 "
 
-[sub_resource type="Gradient" id=1]
+[sub_resource type="Gradient" id=4]
 colors = PoolColorArray( 0.286743, 0.90625, 0.296423, 1, 0.666992, 1, 0.65625, 1 )
 
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
 width = 20
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 11.8618, 0.469574 )
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=7]
-curve = SubResource( 6 )
+[sub_resource type="CurveTexture" id=2]
+curve = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticlesMaterial" id=7]
 lifetime_randomness = 0.5
 emission_shape = 2
 emission_box_extents = Vector3( 50, 1, 1 )
@@ -39,17 +39,17 @@ orbit_velocity_random = 0.0
 angle_random = 1.0
 scale = 3.0
 scale_random = 0.5
-scale_curve = SubResource( 7 )
+scale_curve = SubResource( 2 )
 color = Color( 0.854902, 1, 0.862745, 1 )
 
 [node name="Shield" type="Node2D"]
-script = SubResource( 4 )
+script = SubResource( 3 )
 
 [node name="Cannon" type="Sprite" parent="."]
 position = Vector2( 0.0210154, -2.95282 )
 rotation = 3.14159
 scale = Vector2( 5, 7.996 )
-texture = SubResource( 2 )
+texture = SubResource( 5 )
 offset = Vector2( 0, 5 )
 
 [node name="ShootingPoint" type="Position2D" parent="."]
@@ -65,11 +65,10 @@ collision_mask = 1023
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 rotation = 2.91038e-11
-shape = SubResource( 3 )
+shape = SubResource( 6 )
 
 [node name="ConstantParticles" type="Particles2D" parent="."]
 position = Vector2( -0.103382, -47.9955 )
-scale = Vector2( 1, 1 )
 lifetime = 0.6
 local_coords = false
-process_material = SubResource( 5 )
+process_material = SubResource( 7 )
