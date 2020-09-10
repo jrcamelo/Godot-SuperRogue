@@ -81,8 +81,9 @@ script = ExtResource( 4 )
 
 [node name="Normal" type="Node2D" parent="Equipment/Movement"]
 script = ExtResource( 6 )
+accel = 150
 max_speed = 300
-friction = 1000
+friction = 600
 
 [node name="Status" type="Node2D" parent="."]
 script = ExtResource( 9 )

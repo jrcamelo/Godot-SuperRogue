@@ -95,4 +95,4 @@ position = Vector2( 144, -472 )
 position = Vector2( -536, -2.09364 )
 
 [node name="Character" parent="Emitter" instance=ExtResource( 5 )]
-position = Vector2( 0, -968 )
+position = Vector2( 8, 688 )

@@ -17,7 +17,7 @@ shape = SubResource( 1 )
 
 [node name="Body" parent="." instance=ExtResource( 3 )]
 script = ExtResource( 1 )
-MAX_SPEED = 300
+MAX_SPEED = 320
 ACCEL = 3000
 FRICTION = 10000
 
