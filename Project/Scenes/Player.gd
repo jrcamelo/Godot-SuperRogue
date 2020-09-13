@@ -95,7 +95,6 @@ func switch_weapon_right(new_weapon):
 var colors := [Color.red, Color.black, Color.darkgreen, Color.green]
 func was_hit(damage):
 	if not invincible:
-		print(damage)	
 		health -= damage
 		$Body.texture.gradient.set_color(1, colors[health-1])
 		if health <= 0:

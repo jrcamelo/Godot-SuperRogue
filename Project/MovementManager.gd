@@ -26,6 +26,8 @@ func add_new_propulsion(new_propulsion: Propulsion):
 	add_child(Propulsor)
 	
 func move_towards_input(input: Vector2, delta):
+	if Propulsor == null or Body == null:
+		return
 	movement = Propulsor.get_move_towards_input(movement, input, delta)
 	movement = Body.move_and_slide(movement)
 

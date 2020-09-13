@@ -17,7 +17,7 @@ func _ready():
 				continue
 			var m = meteor.instance()
 			m.global_position = spawn_position
-			m.angular_velocity = randf()
+			m.angular_velocity = randf() * 10
 			var randsize = rand_range(0.5, 1)
 			m.scale = Vector2(randsize, randsize)
 			m.mass *= randsize

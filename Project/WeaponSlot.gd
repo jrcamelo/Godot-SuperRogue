@@ -12,8 +12,6 @@ func _ready():
 		enabled = true
 		Weapon.parent = get_parent().get_parent().get_parent().get_parent()
 
-	
-
 func add_weapon(new_weapon: Gun):
 	if Weapon != null:
 		remove_weapon()

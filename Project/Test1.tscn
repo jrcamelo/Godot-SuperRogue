@@ -4,19 +4,14 @@
 [ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Emitter.gd" type="Script" id=4]
-[ext_resource path="res://NewEnemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Guns/MachineGun.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Character.tscn" type="PackedScene" id=6]
 [ext_resource path="res://StarBackground.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Test1.gd" type="Script" id=8]
+[ext_resource path="res://Guns/Cannon.tscn" type="PackedScene" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 28.937, 29.5936 )
-
-[sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0, 0.509677, 0.980645 )
-colors = PoolColorArray( 0, 0, 0, 1, 0.480469, 0.480469, 0.480469, 1, 0, 0, 0, 1 )
-
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 8 )
@@ -65,26 +60,11 @@ script = ExtResource( 4 )
 position = Vector2( 1.10684, 245.253 )
 
 [node name="Camera2D" type="Camera2D" parent="Emitter"]
-visible = false
 scale = Vector2( 1e-05, 1.25 )
 current = true
 zoom = Vector2( 1.5, 1.5 )
 process_mode = 0
 script = ExtResource( 2 )
-
-[node name="Node2D" type="Node2D" parent="Emitter/Camera2D"]
-visible = false
-scale = Vector2( 1, 1.224 )
-
-[node name="Sprite" type="Sprite" parent="Emitter/Camera2D/Node2D"]
-position = Vector2( 377696, -1.29193 )
-scale = Vector2( 93071.7, 718.416 )
-z_index = -100
-z_as_relative = false
-texture = SubResource( 3 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="StarBackground" parent="Emitter/Camera2D" instance=ExtResource( 7 )]
 
@@ -103,5 +83,11 @@ position = Vector2( 144, -472 )
 [node name="Enemy5" parent="Emitter" instance=ExtResource( 3 )]
 position = Vector2( -536, -2.09364 )
 
-[node name="Character" parent="Emitter" instance=ExtResource( 5 )]
-position = Vector2( 0, -944 )
+[node name="Character" parent="." instance=ExtResource( 6 )]
+position = Vector2( -232, 256 )
+
+[node name="Character2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 296, 272 )
+weapon_paths = [ ExtResource( 9 ), ExtResource( 5 ), ExtResource( 9 ) ]
+
+[editable path="Emitter/Camera2D/StarBackground"]

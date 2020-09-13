@@ -6,8 +6,8 @@ onready var Status = get_parent().get_parent().get_node("Status") as StatusManag
 onready var Colliders = get_parent().get_parent().get_node("Colliders")
 onready var DetectionRange = Colliders.get_node("DetectionRange") as Area2D
 onready var DetectionShape = DetectionRange.get_child(0) as CollisionShape2D
-onready var Weapons = Equipment.Weapons as WeaponManager
-onready var Movement = Equipment.Movement as MovementManager
+onready var Weapons = Equipment.weapons as WeaponManager
+onready var Movement = Equipment.movement as MovementManager
 
 var delta: float = 0.0
 

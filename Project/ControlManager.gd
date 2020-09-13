@@ -1,11 +1,23 @@
 class_name ControlManager
 extends Node2D
 
-onready var Controller = get_child(0) as CharacterController
+var root = null
+var controller: CharacterController
+
+func _init(_root):
+	root = _root
+
+func _ready():
+	if get_child_count() > 0:
+		controller = get_child(0) as CharacterController
+
+func add_controller(_controller: CharacterController):
+	controller = _controller
+	controller.root = root
+	add_child(controller)
 
 func _on_DetectionRange_body_entered(body):
-	print("A")
-	Controller.character_entered_range(body)
+	controller.character_entered_range(body)
 
 func _on_DetectionRange_body_exited(body):
-	Controller.character_left_range(body)
+	controller.character_left_range(body)

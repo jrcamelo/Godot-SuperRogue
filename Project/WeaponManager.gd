@@ -1,7 +1,20 @@
 class_name WeaponManager
 extends Node2D
 
+var slots: WeaponSlots = null
+
 export var look_speed: float = 0.1
+
+func _ready():
+	if get_child_count() > 0:
+		slots = get_child(0) as WeaponSlots
+	else:
+		create_slots()
+		
+func create_slots():
+	slots = WeaponSlots.new()
+	slots.name = "Slots"
+	add_child(slots)
 
 func look_at_direction(direction: Vector2):
 	var start = rotation
@@ -11,6 +24,9 @@ func look_at_direction(direction: Vector2):
 	$Tween.start()
 
 func shoot_all_weapons(target: Vector2):
-	for slot in $Slots.enabled_slots():
+	if slots == null:
+		return
+	for slot in slots.enabled_slots():
 		(slot as WeaponSlot).Weapon.shoot(target)
+		
 	

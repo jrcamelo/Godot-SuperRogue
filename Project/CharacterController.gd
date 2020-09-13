@@ -10,6 +10,8 @@ extends Node2D
 # onready var Weapons = Equipment.Weapons as WeaponManager
 # onready var Movement = Equipment.Movement as MovementManager
 
+var root = null
+
 func character_entered_range(character):
 	pass
 
