@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://WeaponManager.gd" type="Script" id=1]
 [ext_resource path="res://WeaponSlot.gd" type="Script" id=2]
@@ -11,18 +11,10 @@
 [ext_resource path="res://StatusManager.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/Character.gd" type="Script" id=10]
 [ext_resource path="res://Guns/Cannon.tscn" type="PackedScene" id=11]
+[ext_resource path="res://AppearanceBasic.tscn" type="PackedScene" id=12]
+[ext_resource path="res://CollidersBasic.tscn" type="PackedScene" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
-
-[sub_resource type="Gradient" id=2]
-colors = PoolColorArray( 0, 0, 0, 1, 1, 0, 0, 1 )
-
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
-width = 10
-
-[sub_resource type="CircleShape2D" id=4]
-radius = 600.0
 
 [node name="Character" type="KinematicBody2D"]
 collision_layer = 5
@@ -32,23 +24,9 @@ script = ExtResource( 10 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Appearance" type="Node2D" parent="."]
+[node name="Appearance" parent="." instance=ExtResource( 12 )]
 
-[node name="Node2D" type="Node2D" parent="Appearance"]
-scale = Vector2( 20, 20 )
-
-[node name="Sprite" type="Sprite" parent="Appearance/Node2D"]
-scale = Vector2( 0.1, 1 )
-texture = SubResource( 3 )
-
-[node name="Colliders" type="Node2D" parent="."]
-
-[node name="DetectionRange" type="Area2D" parent="Colliders"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/DetectionRange"]
-shape = SubResource( 4 )
+[node name="Colliders" parent="." instance=ExtResource( 13 )]
 
 [node name="Equipment" type="Node2D" parent="."]
 script = ExtResource( 5 )
@@ -93,5 +71,3 @@ script = ExtResource( 8 )
 
 [node name="NormalAI" type="Node2D" parent="Control"]
 script = ExtResource( 7 )
-[connection signal="body_entered" from="Colliders/DetectionRange" to="Control" method="_on_DetectionRange_body_entered"]
-[connection signal="body_exited" from="Colliders/DetectionRange" to="Control" method="_on_DetectionRange_body_exited"]

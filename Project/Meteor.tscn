@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 24.9524, 24.8835 )
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0.136719, 0.105456, 0.0688934, 1, 0.359375, 0.335247, 0.297607, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+width = 10
+
+[node name="Meteor" type="RigidBody2D"]
+collision_mask = 15
+mass = 1000.0
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
+
+[node name="Node2D" type="Node2D" parent="."]
+scale = Vector2( 5, 5 )
+
+[node name="Sprite" type="Sprite" parent="Node2D"]
+scale = Vector2( 1, 10 )
+texture = SubResource( 2 )
