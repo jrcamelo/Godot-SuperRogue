@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Emitter.gd" type="Script" id=4]
 [ext_resource path="res://NewEnemy.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Character.tscn" type="PackedScene" id=6]
 [ext_resource path="res://StarBackground.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Test1.gd" type="Script" id=8]
 
@@ -106,6 +105,3 @@ position = Vector2( -536, -2.09364 )
 
 [node name="Character" parent="Emitter" instance=ExtResource( 5 )]
 position = Vector2( 0, -944 )
-
-[node name="Character" parent="." instance=ExtResource( 6 )]
-position = Vector2( -128, 256 )

@@ -91,10 +91,15 @@ func switch_weapon_right(new_weapon):
 	if WeaponRight != null:
 		WeaponRight.queue_free()
 	WeaponRight = new_weapon
-	
+
+var colors := [Color.red, Color.black, Color.darkgreen, Color.green]
 func was_hit(damage):
 	if not invincible:
-		restart()
+		print(damage)	
+		health -= damage
+		$Body.texture.gradient.set_color(1, colors[health-1])
+		if health <= 0:
+			restart()
 	
 func restart():
 	get_tree().reload_current_scene()
