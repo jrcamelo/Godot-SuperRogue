@@ -1,11 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Bodies/NormalBody.gd" type="Script" id=1]
 [ext_resource path="res://Guns/Cannon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Bodies/NormalBody.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Player.gd" type="Script" id=4]
+[ext_resource path="res://Trail2D.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2147483650
@@ -32,3 +36,11 @@ position = Vector2( 7, 6 )
 position = Vector2( 7, -6 )
 
 [node name="Cannon" parent="Weapons/WeaponLeft" instance=ExtResource( 2 )]
+
+[node name="Trail2D" parent="." instance=ExtResource( 5 )]
+width = 12.0
+width_curve = SubResource( 2 )
+default_color = Color( 0.101961, 1, 0, 0.184314 )
+resolution = 10.0
+lifetime = 0.25
+max_points = 24

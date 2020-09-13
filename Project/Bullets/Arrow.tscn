@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Bullets/Arrow.gd" type="Script" id=1]
+[ext_resource path="res://Trail2D.tscn" type="PackedScene" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 9.78432, 4.00094 )
@@ -38,4 +39,16 @@ collision_mask = 38
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collider"]
 position = Vector2( 10.1563, -0.124996 )
 shape = SubResource( 1 )
+
+[node name="Trail2D" parent="." instance=ExtResource( 2 )]
+show_behind_parent = true
+lifetime = 0.1
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
+
+[node name="Lifetime" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
 [connection signal="body_entered" from="Collider" to="." method="_on_body_entered"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_Lifetime_timeout"]

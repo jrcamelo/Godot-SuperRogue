@@ -78,7 +78,6 @@ fract_delta = false
 process_material = SubResource( 4 )
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="."]
-visible = false
 motion_scale = Vector2( 0, 0 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxLayer3"]
