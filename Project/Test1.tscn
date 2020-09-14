@@ -70,24 +70,27 @@ script = ExtResource( 2 )
 
 [node name="Enemy" parent="Emitter" instance=ExtResource( 3 )]
 position = Vector2( 504, 8 )
+health = 4
 
 [node name="Enemy2" parent="Emitter" instance=ExtResource( 3 )]
 position = Vector2( 1.10684, -472 )
+health = 4
 
 [node name="Enemy3" parent="Emitter" instance=ExtResource( 3 )]
 position = Vector2( -160, -472 )
+health = 4
 
 [node name="Enemy4" parent="Emitter" instance=ExtResource( 3 )]
 position = Vector2( 144, -472 )
+health = 4
 
 [node name="Enemy5" parent="Emitter" instance=ExtResource( 3 )]
 position = Vector2( -536, -2.09364 )
-
-[node name="Character" parent="." instance=ExtResource( 6 )]
-position = Vector2( -232, 256 )
+health = 4
 
 [node name="Character2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 296, 272 )
+position = Vector2( 0, -968 )
 weapon_paths = [ ExtResource( 5 ), ExtResource( 9 ), ExtResource( 5 ) ]
+health = 10
 
 [editable path="Emitter/Camera2D/StarBackground"]

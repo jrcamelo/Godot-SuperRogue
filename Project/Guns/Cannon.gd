@@ -8,7 +8,7 @@ func setup():
 func create_bullet_instance():
 	var bullet = Bullet.instance()
 	bullet.SPEED = 1000
-	bullet.DAMAGE = 1
+	bullet.DAMAGE = 2
 	return bullet
 
 func _on_Cooldown():

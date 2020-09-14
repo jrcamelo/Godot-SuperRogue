@@ -20,9 +20,7 @@ var distance_to_keep = 500
 
 func process():
 	.process()
-	
-	update_whiskers_closest_collision()
-	update_direction_to_avoid_collision()
+	reset_direction()
 	
 	if target:
 		update_target_distance_and_direction()
@@ -31,6 +29,9 @@ func process():
 		aim_at_target()
 		shoot_all_weapons()
 		
+	update_whiskers_closest_collision()
+	update_direction_to_avoid_collision()
+	update_direction_with_whiskers()
 	equipment.movement.move_towards_input(movement_direction, delta * (direction_to_avoid_collision.length() + 1))
 		
 
@@ -85,7 +86,7 @@ func update_direction_to_follow_at_distance():
 		movement_direction = -target_direction
 
 func update_direction_with_whiskers():
-	var mixed_vectors = movement_direction + (direction_to_avoid_collision * 5)	
+	var mixed_vectors = movement_direction + (direction_to_avoid_collision * 5)
 	movement_direction = mixed_vectors.normalized()
 
 func _on_CharacterDetection_body_entered(body):
@@ -102,6 +103,11 @@ func on_target_found(body):
 		
 func on_target_lost(body):
 	target = null
+	reset_direction()
 	character_detection.scale = Vector2(1.5, 1.0)
-		
+	
+func reset_direction():
+	movement_direction = Vector2.ZERO
+	target_direction = Vector2.ZERO
+
 

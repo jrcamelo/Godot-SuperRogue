@@ -22,6 +22,10 @@ func _on_body_entered(body):
 				body.was_hit(DAMAGE)
 				if body.alive == true:
 					queue_free()
+		# TODO: Find a better way to do this due to reference bug
+		elif body.has_method("was_hit"):
+			body.was_hit(DAMAGE)
+			queue_free()
 		else:
 			queue_free()
 
