@@ -20,6 +20,7 @@ func add_controller(_controller: CharacterController):
 	controller = _controller
 	controller.root = root
 	controller.initialize(equipment)
+	print(equipment)
 	add_child(controller)
 
 func _on_DetectionRange_body_entered(body):
