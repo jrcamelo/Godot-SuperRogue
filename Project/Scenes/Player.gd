@@ -43,7 +43,10 @@ func move(delta):
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	
-	movement = Body.move(movement, input_vector, delta)	
+	if Input.is_action_pressed("shift"):
+		movement = Body.move(movement, input_vector * 1.5, delta)
+	else:
+		movement = Body.move(movement, input_vector, delta)	
 	movement = move_and_slide(movement)	
 
 func weapons(delta):	
