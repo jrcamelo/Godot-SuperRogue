@@ -10,7 +10,13 @@ export var whisker_dodge_duration := 0.25
 var whisker_dodging := 0.0
 
 var target: Node2D = null
+var target_relative_position: Vector2
 var target_direction := Vector2.ZERO
+var target_distance := 0
+
+var movement_direction := Vector2.ZERO
+var distance_to_keep = 500
+
 
 func process():
 	.process()
@@ -19,12 +25,13 @@ func process():
 	update_direction_to_avoid_collision()
 	
 	if target:
-		update_target_direction()
+		update_target_distance_and_direction()
+		update_direction_to_follow_at_distance()
+		update_direction_with_whiskers()
 		aim_at_target()
 		shoot_all_weapons()
-	
-	
-	equipment.movement.move_towards_input(direction_to_avoid_collision, delta * (direction_to_avoid_collision.length() + 1))
+		
+	equipment.movement.move_towards_input(movement_direction, delta * (direction_to_avoid_collision.length() + 1))
 		
 
 func update_whiskers_closest_collision():	
@@ -61,14 +68,25 @@ func update_direction_to_avoid_collision():
 	direction_to_avoid_collision = -collision_to_avoid.normalized().rotated(random_angle)
 	whisker_dodging = whisker_dodge_duration
 
-func update_target_direction():
-	target_direction = (target.global_position - global_position).normalized()
+func update_target_distance_and_direction():
+	target_relative_position = target.global_position - global_position
+	target_direction = target_relative_position.normalized()
+	target_distance = target_relative_position.length()
 
 func aim_at_target():
 	equipment.weapons.look_at_direction(target_direction)
 
 func shoot_all_weapons():
 	equipment.weapons.shoot_all_weapons(target.global_position)
+	
+func update_direction_to_follow_at_distance():
+	movement_direction = target_direction
+	if target_distance <= distance_to_keep:
+		movement_direction = -target_direction
+
+func update_direction_with_whiskers():
+	var mixed_vectors = movement_direction + (direction_to_avoid_collision * 5)	
+	movement_direction = mixed_vectors.normalized()
 
 func _on_CharacterDetection_body_entered(body):
 	if body.name == "Player":

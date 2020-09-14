@@ -37,4 +37,4 @@ position = Vector2( 8, -8 )
 position = Vector2( 9, 0 )
 
 [node name="Right" type="Node2D" parent="Slots"]
-position = Vector2( 8, 8 )
+position = Vector2( 9.18339, 8.0417 )
