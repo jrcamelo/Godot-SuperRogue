@@ -7,7 +7,7 @@ func setup():
 	
 func create_bullet_instance():
 	var bullet = Bullet.instance()
-	bullet.SPEED = 1000
+	bullet.SPEED = 750
 	bullet.DAMAGE = 0.25
 	return bullet
 

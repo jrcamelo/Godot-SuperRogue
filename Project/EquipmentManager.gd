@@ -11,6 +11,7 @@ func _init(_root):
 func _ready():
 	weapons = WeaponManager.new()
 	weapons.name = "Weapons"
+	weapons.root = root
 	add_child(weapons)
 	
 	movement = MovementManager.new()

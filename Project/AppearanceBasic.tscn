@@ -28,14 +28,13 @@ visible = false
 shape = SubResource( 3 )
 
 [node name="Slots" type="Node2D" parent="."]
-visible = false
 scale = Vector2( 0.871138, 0.994815 )
 
 [node name="Left" type="Node2D" parent="Slots"]
-position = Vector2( 7, -7 )
+position = Vector2( 8, -8 )
 
 [node name="Center" type="Node2D" parent="Slots"]
-position = Vector2( 8, 0 )
+position = Vector2( 9, 0 )
 
 [node name="Right" type="Node2D" parent="Slots"]
-position = Vector2( 7, 7 )
+position = Vector2( 8, 8 )

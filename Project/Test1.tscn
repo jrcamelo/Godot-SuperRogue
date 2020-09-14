@@ -88,6 +88,6 @@ position = Vector2( -232, 256 )
 
 [node name="Character2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 296, 272 )
-weapon_paths = [ ExtResource( 9 ), ExtResource( 5 ), ExtResource( 9 ) ]
+weapon_paths = [ ExtResource( 5 ), ExtResource( 9 ), ExtResource( 5 ) ]
 
 [editable path="Emitter/Camera2D/StarBackground"]

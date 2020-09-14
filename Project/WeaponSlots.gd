@@ -1,6 +1,7 @@
 class_name WeaponSlots
 extends Node2D
 
+var root = null
 export var slots_dict: Dictionary = {}
 
 func _ready():
@@ -35,6 +36,7 @@ func add_slots_from_appearance(appearance_slots):
 		var new_slot = WeaponSlot.new()
 		new_slot.position = node.position
 		new_slot.name = node.name
+		new_slot.root = root
 		add_child(new_slot)
 	save_slots_on_dict()
 	print(slots_dict)
