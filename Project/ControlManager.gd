@@ -2,18 +2,24 @@ class_name ControlManager
 extends Node2D
 
 var root = null
+var equipment: EquipmentManager
+
 var controller: CharacterController
 
-func _init(_root):
+func _init(_root, _equipment):
 	root = _root
+	equipment = _equipment
 
-func _ready():
+func _ready():	
 	if get_child_count() > 0:
 		controller = get_child(0) as CharacterController
+		controller.initialize(equipment)
+		
 
 func add_controller(_controller: CharacterController):
 	controller = _controller
 	controller.root = root
+	controller.initialize(equipment)
 	add_child(controller)
 
 func _on_DetectionRange_body_entered(body):

@@ -15,6 +15,7 @@ func _ready():
 	
 	movement = MovementManager.new()
 	movement.name = "Movement"
+	movement.body = root as KinematicBody2D
 	add_child(movement)
 	
 	

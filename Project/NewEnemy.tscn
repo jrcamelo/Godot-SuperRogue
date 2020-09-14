@@ -5,7 +5,7 @@
 [ext_resource path="res://WeaponSlots.gd" type="Script" id=3]
 [ext_resource path="res://MovementManager.gd" type="Script" id=4]
 [ext_resource path="res://EquipmentManager.gd" type="Script" id=5]
-[ext_resource path="res://NormalPropulsion.gd" type="Script" id=6]
+[ext_resource path="res://NormalPropulsion.tscn" type="PackedScene" id=6]
 [ext_resource path="res://NormalEnemyAI.gd" type="Script" id=7]
 [ext_resource path="res://ControlManager.gd" type="Script" id=8]
 [ext_resource path="res://StatusManager.gd" type="Script" id=9]
@@ -57,11 +57,7 @@ script = ExtResource( 2 )
 [node name="Movement" type="Node2D" parent="Equipment"]
 script = ExtResource( 4 )
 
-[node name="Normal" type="Node2D" parent="Equipment/Movement"]
-script = ExtResource( 6 )
-accel = 150
-max_speed = 300
-friction = 600
+[node name="Normal" parent="Equipment/Movement" instance=ExtResource( 6 )]
 
 [node name="Status" type="Node2D" parent="."]
 script = ExtResource( 9 )

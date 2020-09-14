@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://ColliderUpdater.gd" type="Script" id=1]
 [ext_resource path="res://Character.gd" type="Script" id=2]
 [ext_resource path="res://AppearanceBasic.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Guns/Cannon.tscn" type="PackedScene" id=4]
+[ext_resource path="res://BasicEnemyAI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://NormalPropulsion.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0, 0 )
@@ -11,7 +13,9 @@ extents = Vector2( 0, 0 )
 [node name="Character" type="KinematicBody2D"]
 script = ExtResource( 2 )
 appearance_path = ExtResource( 3 )
+controller_path = ExtResource( 5 )
 weapon_paths = [ ExtResource( 4 ), null, ExtResource( 4 ) ]
+propulsion_path = ExtResource( 6 )
 
 [node name="ColliderUpdater" type="Node2D" parent="."]
 script = ExtResource( 1 )

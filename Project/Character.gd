@@ -11,6 +11,7 @@ var control: ControlManager = null
 export (PackedScene) var appearance_path
 export (PackedScene) var controller_path
 export (Array, PackedScene) var weapon_paths
+export (PackedScene) var propulsion_path
 
 onready var collider_updater: ColliderUpdater = get_node("ColliderUpdater")
 
@@ -20,11 +21,12 @@ func _ready():
 func create():
 	set_appearance_scene(appearance_path)
 	create_equipment_manager()
-	create_control_manager()
-	# set_controller_scene(controller_path)
-	
 	set_weapon_slots()
 	set_weapons(weapon_paths)
+	set_propulsion(propulsion_path)
+	
+	create_control_manager()
+	set_controller_scene(controller_path)
 	
 	# detection = preload("res://CollidersBasic.tscn").instance()
 	#set_detection(preload("res://CollidersBasic.tscn").instance())
@@ -46,9 +48,9 @@ func set_weapon_slots():
 	var appearance_slots = appearance.get_slots_children()
 	equipment.weapons.slots.add_slots_from_appearance(appearance_slots)
 
-func set_weapons(weapon_paths):
+func set_weapons(_weapon_paths):
 	var i = 0
-	for w_path in weapon_paths:
+	for w_path in _weapon_paths:
 		if w_path == null:
 			i += 1
 			continue
@@ -57,13 +59,18 @@ func set_weapons(weapon_paths):
 		if slot != null:
 			slot.add_weapon(weapon)
 		i += 1
+
+func set_propulsion(_propulsion_path):
+	var propulsion = propulsion_path.instance()
+	equipment.movement.add_new_propulsion(propulsion)
 	
 func create_control_manager():
-	control = ControlManager.new(self)
+	control = ControlManager.new(self, equipment)
 	control.name = "Control"
 	add_child(control)
 	
 func set_controller_scene(controller_scene: PackedScene):
+	var controller = controller_scene.instance()
 	control.add_controller(controller_scene.instance())
 
 	

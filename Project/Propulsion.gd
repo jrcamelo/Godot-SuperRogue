@@ -23,7 +23,6 @@ func get_move_towards_input(_movement: Vector2, _input: Vector2, _delta):
 
 func accelerate():
 	movement = movement.move_toward(input.normalized() * max_speed, delta * accel)
-	print(movement)
 
 func brake():
 	movement = movement.move_toward(Vector2.ZERO, friction * delta)
