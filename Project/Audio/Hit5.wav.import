@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Hit5.wav-9e6fa8b67b253608ecf33cb6a792721a.sample"
+
+[deps]
+
+source_file="res://Audio/Hit5.wav"
+dest_files=[ "res://.import/Hit5.wav-9e6fa8b67b253608ecf33cb6a792721a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

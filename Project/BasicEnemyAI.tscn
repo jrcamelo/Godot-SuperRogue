@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://BasicEnemyAI.gd" type="Script" id=1]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 500.0
+radius = 528.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 832.0
 
 [node name="BasicEnemyAI" type="Node2D"]
 script = ExtResource( 1 )
@@ -80,5 +83,20 @@ collision_mask = 2
 [node name="Detection" type="CollisionShape2D" parent="CharacterDetection"]
 modulate = Color( 1, 1, 1, 0.196078 )
 shape = SubResource( 1 )
+
+[node name="ShootingRange" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="ShootRange" type="CollisionShape2D" parent="ShootingRange"]
+modulate = Color( 1, 1, 1, 0.196078 )
+scale = Vector2( 1, 0.8 )
+shape = SubResource( 2 )
+
+[node name="FirstShotCooldown" type="Timer" parent="."]
+wait_time = 0.5
 [connection signal="body_entered" from="CharacterDetection" to="." method="_on_CharacterDetection_body_entered"]
 [connection signal="body_exited" from="CharacterDetection" to="." method="_on_CharacterDetection_body_exited"]
+[connection signal="body_entered" from="ShootingRange" to="." method="_on_ShootingRange_body_entered"]
+[connection signal="body_exited" from="ShootingRange" to="." method="_on_ShootingRange_body_exited"]
+[connection signal="timeout" from="FirstShotCooldown" to="." method="_on_NoPrefire_timeout"]

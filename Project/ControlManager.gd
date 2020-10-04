@@ -28,3 +28,6 @@ func _on_DetectionRange_body_entered(body):
 
 func _on_DetectionRange_body_exited(body):
 	controller.character_left_range(body)
+	
+func _on_was_hit(damage):
+	controller.was_hit(damage)

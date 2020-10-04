@@ -21,7 +21,7 @@ func _physics_process(_delta):
 	
 	delta = _delta	
 	process()
-	
+		
 func inactive():
 	return
 	

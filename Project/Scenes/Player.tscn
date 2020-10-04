@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Bodies/NormalBody.gd" type="Script" id=1]
 [ext_resource path="res://Guns/Cannon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Bodies/NormalBody.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Player.gd" type="Script" id=4]
 [ext_resource path="res://Trail2D.tscn" type="PackedScene" id=5]
+[ext_resource path="res://RandomSFX.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Audio/hurt2.wav" type="AudioStream" id=7]
+[ext_resource path="res://Audio/hurt3.wav" type="AudioStream" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -44,3 +47,7 @@ default_color = Color( 0.101961, 1, 0, 0.184314 )
 resolution = 10.0
 lifetime = 0.25
 max_points = 24
+
+[node name="RandomHurtSFX" parent="." instance=ExtResource( 6 )]
+sounds = [ ExtResource( 7 ), ExtResource( 9 ) ]
+sound_offset = 0.05

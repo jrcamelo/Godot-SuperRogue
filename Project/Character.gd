@@ -13,10 +13,11 @@ export (PackedScene) var controller_path
 export (Array, PackedScene) var weapon_paths
 export (PackedScene) var propulsion_path
 
-
 export var health = 5
 
 onready var collider_updater: ColliderUpdater = get_node("ColliderUpdater")
+
+signal was_hit()
 
 func _ready():
 	create()
@@ -71,12 +72,15 @@ func create_control_manager():
 	control = ControlManager.new(self, equipment)
 	control.name = "Control"
 	add_child(control)
+	connect("was_hit", control, "_on_was_hit")
 	
 func set_controller_scene(controller_scene: PackedScene):
 	var controller = controller_scene.instance()
 	control.add_controller(controller_scene.instance())
 	
 func was_hit(damage):
+	emit_signal("was_hit", damage)
+	$RandomHurtSFX.play_random()
 	health -= damage
 	if health <= 0:
 		queue_free()

@@ -186,6 +186,8 @@ func _on_FirstShot_timeout():
 	can_shoot(true)
 
 func can_shoot(can: bool = true):
+	if Weapon == null:
+		return
 	Weapon.can_shoot = can
 	if can:
 		Weapon.Cooldown.start()

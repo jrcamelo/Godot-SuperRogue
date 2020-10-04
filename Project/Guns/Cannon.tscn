@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Guns/Cannon.gd" type="Script" id=1]
+[ext_resource path="res://RandomSFX.tscn" type="PackedScene" id=2]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 0.286743, 0.90625, 0.296423, 1, 0.666992, 1, 0.65625, 1 )
@@ -50,7 +51,7 @@ position = Vector2( 17.1092, 0.0177097 )
 
 [node name="Cooldown" type="Timer" parent="."]
 process_mode = 0
-wait_time = 0.8
+wait_time = 0.6
 autostart = true
 
 [node name="ShootParticles" type="Particles2D" parent="."]
@@ -63,4 +64,7 @@ preprocess = 0.1
 explosiveness = 1.0
 local_coords = false
 process_material = SubResource( 5 )
+
+[node name="RandomSFX" parent="." instance=ExtResource( 2 )]
+volume_db = -6.433
 [connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown"]
